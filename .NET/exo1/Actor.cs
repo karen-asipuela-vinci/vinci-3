@@ -15,7 +15,7 @@ namespace exo1
 
         private static readonly long SerialVersionUID = 1L;
         private readonly int SizeInCentimeter;
-        private readonly IList<Movie> Movies;
+        private readonly IList<Movie> Movies = [];
 
         public int getSizeInCentimeter()
         {
@@ -25,8 +25,7 @@ namespace exo1
         public Actor(string Name, string Firstname, DateTime BirthDate, int SizeInCentimeter)
             : base(Name, Firstname, BirthDate)
         {
-            this.SizeInCentimeter = SizeInCentimeter;
-  
+            this.SizeInCentimeter = SizeInCentimeter;  
         }
 
 

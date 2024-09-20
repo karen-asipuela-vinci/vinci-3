@@ -68,7 +68,7 @@ namespace exo1
             return actors.Contains(actor);
         }
 
-        public string ToString()
+        public override string ToString()
         {
             return "Movie [title=" + title + ", releaseYear=" + releaseYear + "]";
         }

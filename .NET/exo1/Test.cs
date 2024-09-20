@@ -16,7 +16,7 @@ namespace exo1
 
             Actor[] MyActors =  {
                 new( "Assange", "Julian", new DateTime(1961, 6, 3), 187),
-                new( "Paul", "Newmann", new DateTime(1925, 0, 26), 187),
+                new( "Paul", "Newmann", new DateTime(1925, 1, 26), 187),
                 new( "Becker", "Norma Jean", new DateTime(1926, 5, 1), 187)
         };
 
@@ -67,12 +67,12 @@ namespace exo1
                 {
                     if (Person is Director)
                     {
-                        Console.WriteLine("a dirigÃ© les films suivants :");
+                        Console.WriteLine("a dirigé les films suivants :");
                         MoviesIt = ((Director)Person).MoviesList();
                     }
                     else
                     {
-                        Console.WriteLine("est inconnu et n'a rien Ã  faire ici !!! ");
+                        Console.WriteLine("est inconnu et n'a rien à faire ici !!! ");
                         continue;
                     }
                 }
