@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.List;
 
 public class AnalyseurTexte {
   // attributs
@@ -14,7 +13,9 @@ public class AnalyseurTexte {
     observersList.remove(observer);
   }
 
-  public void lireFichier() {
-
+  public void lireFichier(String fichier) {
+    for (Observer observer : observersList) {
+      observer.update(fichier);
+    }
   }
 }

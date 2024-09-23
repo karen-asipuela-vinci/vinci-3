@@ -11,4 +11,8 @@ public class Belgique implements Observer{
       }
     }
   }
+  @Override
+  public void imprimerStats() {
+    System.out.println("Nombre de Belgique : " + compteurBelgique);
+  }
 }

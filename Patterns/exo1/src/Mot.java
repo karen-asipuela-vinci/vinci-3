@@ -5,4 +5,9 @@ public class Mot implements Observer{
   public void update(String ligne) {
     compteurMots += ligne.split(" ").length;
   }
+
+  @Override
+  public void imprimerStats() {
+    System.out.println("Nombre de mots : " + compteurMots);
+  }
 }

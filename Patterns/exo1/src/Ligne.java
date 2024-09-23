@@ -5,4 +5,8 @@ public class Ligne implements Observer{
   public void update(String ligne) {
     compteurLignes++;
   }
+  @Override
+  public void imprimerStats() {
+    System.out.println("Nombre de lignes : " + compteurLignes);
+  }
 }
