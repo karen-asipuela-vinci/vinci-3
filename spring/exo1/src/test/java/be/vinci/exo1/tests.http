@@ -1,0 +1,34 @@
+### CreateOne
+POST http://localhost:8080/produits/create
+Content-Type: application/json
+
+{
+  "name": "nameTest",
+  "category": "categoryTest",
+  "price": 1000
+}
+
+### Read all
+GET localhost:8080/produits
+
+### Read one (id=3)
+GET localhost:8080/produits/3
+
+### update one (id=3)
+POST localhost:8080/produits/update/3
+Content-Type: application/json
+
+{
+  "name": "nomTestUpdate",
+  "category": "catTestUpdate",
+  "price": 1000
+}
+
+### Read all
+GET localhost:8080/produits
+
+### Delete all
+POST localhost:8080/delete
+
+### Read all
+GET localhost:8080/produits
