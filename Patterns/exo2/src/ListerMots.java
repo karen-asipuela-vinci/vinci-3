@@ -1,3 +1,4 @@
+import Strategies.CommencePar;
 import Strategies.Strategy;
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -7,6 +8,7 @@ import java.util.StringTokenizer;
 public class ListerMots {
 
   private final String fichier;
+  private final Compteur compteurMotsOk = new Compteur();
 
   public ListerMots(String fichier) {
     this.fichier = fichier;
@@ -23,10 +25,14 @@ public class ListerMots {
           for (Strategy s : strategy) {
             if (s.estValide(mot)) {
               System.out.println(mot);
+              // compteur
+              compteurMotsOk.incrementer();
             }
           }
         }
       }
+      // imprimer le compteur
+      System.out.println("Nombre de mots valides : " + compteurMotsOk.getNbMots());
     } catch (IOException e) {
       throw new RuntimeException(e);
     }
