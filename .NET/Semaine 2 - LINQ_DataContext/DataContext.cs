@@ -32,7 +32,7 @@ namespace LINQDataContext
                 new Student(){ Student_ID = 13, First_Name = "Tom", Last_Name = "Cruise", BirthDate = new DateTime(1962,7,3), Login = "tcruise", Section_ID = 1020, Year_Result = 4, Course_ID = "EG2110"},
                 new Student(){ Student_ID = 14, First_Name = "Reese", Last_Name = "Witherspoon", BirthDate = new DateTime(1976,3,22), Login = "rwithers", Section_ID = 1020, Year_Result = 7, Course_ID = "EG1020"},
                 new Student(){ Student_ID = 15, First_Name = "Sophie", Last_Name = "Marceau", BirthDate = new DateTime(1966,11,17), Login = "smarceau", Section_ID = 1110, Year_Result = 6, Course_ID = "0"},
-                new Student(){ Student_ID = 16, First_Name = "Sarah", Last_Name = "Michelle Gellar", BirthDate = new DateTime(1977,4,14), Login = "smichell", Section_ID = 1020, Year_Result = 7, Course_ID = "EG2110"},a
+                new Student(){ Student_ID = 16, First_Name = "Sarah", Last_Name = "Michelle Gellar", BirthDate = new DateTime(1977,4,14), Login = "smichell", Section_ID = 1020, Year_Result = 7, Course_ID = "EG2110"},
                 new Student(){ Student_ID = 17, First_Name = "Alyssa", Last_Name = "Milano", BirthDate = new DateTime(1972,12,19), Login = "amilano", Section_ID = 1110, Year_Result = 7, Course_ID = "0"},
                 new Student(){ Student_ID = 18, First_Name = "Jennifer", Last_Name = "Garner", BirthDate = new DateTime(1972,4,17), Login = "jgarner", Section_ID = 1120, Year_Result = 18, Course_ID = "0"},
                 new Student(){ Student_ID = 19, First_Name = "Michael J.", Last_Name = "Fox", BirthDate = new DateTime(1969,6,20), Login = "mfox", Section_ID = 1310, Year_Result = 3, Course_ID = "0"},
