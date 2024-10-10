@@ -1,0 +1,163 @@
+openapi: 3.1.0
+info:
+  title: Product Service
+  description: Products Service
+  version: 1.0.0
+servers:
+  - url: http://localhost:8080
+    description: Development server
+paths:
+  /produits/create:
+    post:
+      summary: Créer un nouveau produit
+      requestBody:
+        description: Contenu du nouveau produit
+        required: true
+        content:
+          'application/json':
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: Nom du produit
+                category:
+                  type: string
+                  description: Catégorie du produit
+                price:
+                  type: number
+                  description: Prix du produit
+                  format: float
+              example:
+                name: "Creation1"
+                category: "Informatique22"
+                price: 1000.50
+      responses:
+        200:
+          description: Produit créé
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/product'
+  /produits:
+    get:
+      summary: Lire tous les produits
+      responses:
+        200:
+          description: Retourne la liste de tous les produits
+          content:
+            'application/json':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/product'
+  /produits/{id}:
+    get:
+      summary: Lire un produit par son identifiant
+      parameters:
+        - name: id
+          in: path
+          description: Identifiant du produit
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          description: Retourne un produit
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/product'
+  /produits/update/{id}:
+    post:
+      summary: Mettre à jour un produit (sans modifier l'ID)
+      parameters:
+        - name: id
+          in: path
+          description: Identifiant du produit
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        description: Nouveau contenu du produit à mettre à jour (à l'exception de l'ID)
+        required: true
+        content:
+          'application/json':
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: Nom du produit (facultatif)
+                category:
+                  type: string
+                  description: Nouvelle catégorie du produit
+                price:
+                  type: number
+                  description: Nouveau prix du produit (facultatif)
+                  format: float
+              example:
+                name: "Nouveau nom du produit"
+                category: "Nouvelle catégorie"
+                price: 950.0
+      responses:
+        200:
+          description: Produit mis à jour
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/product'
+
+  /delete/{id}:
+    post:
+      summary: Supprimer un produit par son identifiant
+      parameters:
+        - name: id
+          in: path
+          description: Identifiant du produit
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          description: Produit supprimé
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/product'
+
+  /delete:
+    post:
+      summary: Supprimer tous les produits
+      responses:
+        200:
+          description: Tous les produits ont été supprimés
+          content:
+            'application/json':
+              schema:
+                type: string
+                example: "Tous les produits ont été supprimés"
+
+components:
+  schemas:
+    product:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Identifiant du produit
+        name:
+          type: string
+          description: Nom du produit
+        category:
+          type: string
+          description: Catégorie du produit
+        price:
+          type: number
+          description: Prix du produit
+          format: float
+      example:
+        id: 1
+        name: "Ordinateur"
+        category: "Informatique"
+        price: 1000.0

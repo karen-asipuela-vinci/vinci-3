@@ -41,7 +41,7 @@ public class ProduitsController{
   //getOne
   @GetMapping("/produits/{id}")
   public Produit getProduit(@PathVariable int id){
-    return produits.get(id);
+    return produits.get(id - 1);
   }
 
   //updateOne
@@ -68,6 +68,6 @@ public class ProduitsController{
   //deleteOne
   @PostMapping("/delete/{id}")
   public void delete(@PathVariable int id) {
-    produits.remove(id);
+    produits.remove(id - 1);
   }
 }
