@@ -78,8 +78,8 @@ public partial class NorthwindContext : DbContext
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
             optionsBuilder.UseSqlServer("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=Northwind;MultipleActiveResultSets=True")
                .UseLazyLoadingProxies()
-               .LogTo(Console.WriteLine, LogLevel.Information)
-               .EnableSensitiveDataLogging();
+               .LogTo(Console.WriteLine, LogLevel.Warning) // warning au lieu de info pour ne pas avoir les messages info
+               .EnableSensitiveDataLogging(false);
         }
     }
 
@@ -597,6 +597,11 @@ public partial class NorthwindContext : DbContext
         });
 
         OnModelCreatingPartial(modelBuilder);
+    }
+
+    internal void Refresh(System.Data.Entity.Core.Objects.RefreshMode clientWins, DbSet<Customer> customers)
+    {
+        throw new NotImplementedException();
     }
 
     partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
