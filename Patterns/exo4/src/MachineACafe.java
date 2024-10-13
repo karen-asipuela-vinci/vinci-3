@@ -1,10 +1,58 @@
 public class MachineACafe {
-	public final int idle = 0;
-	public final int collecte = 1;
-	public final int pasAssez = 2;
+
+	// enum des etats :
+	// par état, différencier les actions possibles
+	private enum Etat {
+		IDLE {
+			public void selectionnerBoisson(ToucheBoisson toucheBoisson, MachineACafe machine) {
+				machine.afficherPasAssez(toucheBoisson);
+			}
+
+			public void rendreMonnaie (MachineACafe machine) {
+				machine.afficherRetour();
+			}
+		},
+		COLLECTE,
+		PAS_ASSEZ {
+			public void entrerMonnaie(Piece piece, MachineACafe machine) {
+				machine.montantEnCours += piece.getValeur();
+				machine.afficherMontant();
+				// si le montant est suffisant, on déclenche la préparation de la boisson
+				// sinon, on reste dans l'état PAS_ASSEZ
+				if (machine.boisson.getPrix() > machine.montantEnCours) {
+					machine.afficherPasAssez(machine.boisson);
+				} else {
+					machine.montantEnCours -= machine.boisson.getPrix();
+					machine.afficherBoisson(machine.boisson);
+					machine.boisson = null;
+					machine.afficherMontant();
+					if (machine.montantEnCours == 0)
+						machine.setState(Etat.IDLE);
+					else
+						machine.etatCourant = COLLECTE;
+				}
+			}
+
+			public void selectionnerBoisson(ToucheBoisson toucheBoisson, MachineACafe machine) {
+				throw new IllegalStateException("Pas assez d'argent");
+			}
+
+			public void rendreMonnaie(MachineACafe machine) {
+				machine.afficherRetour();
+			}
+		};
+	};
+
+	// on rajoute le state aux attributs de la machine
+	private Etat etatCourant = Etat.IDLE;
+	// et méthode get/set (ici juste set nécessaire)
+
+	//public final int idle = 0;
+	//public final int collecte = 1;
+	//public final int pasAssez = 2;
 	
 	private int montantEnCours = 0;
-	private int etatCourant = idle;
+	//private int etatCourant = idle;
 	private ToucheBoisson boisson = null;
 	
 	public void afficherMontant() {
@@ -28,8 +76,8 @@ public class MachineACafe {
 	public void entrerMonnaie(Piece piece) {
 		montantEnCours += piece.getValeur();
 		afficherMontant();
-		if ( etatCourant != pasAssez)
-			etatCourant = collecte;
+		if ( etatCourant != Etat.PAS_ASSEZ)
+			etatCourant = Etat.COLLECTE;
 		else if (boisson.getPrix() > montantEnCours) {
 				afficherPasAssez(boisson);
 		} else {
@@ -38,16 +86,16 @@ public class MachineACafe {
 			boisson = null;
 			afficherMontant();
 			if (montantEnCours == 0)
-				etatCourant =  idle;
+				etatCourant =  Etat.IDLE;
 			else
-				etatCourant =  collecte;
+				etatCourant =  Etat.COLLECTE;
 		}
 	}
 	
 	public void selectionnerBoisson(ToucheBoisson toucheBoisson) {
-		if (etatCourant == pasAssez)
+		if (etatCourant == Etat.PAS_ASSEZ)
 			throw new IllegalStateException();
-		if (etatCourant == idle) {
+		if (etatCourant == Etat.IDLE) {
 			afficherPasAssez(toucheBoisson);
 			return;			
 		}
@@ -55,24 +103,28 @@ public class MachineACafe {
 			boisson = toucheBoisson;
 			afficherPasAssez(boisson);
 			boisson = toucheBoisson;
-			etatCourant =  pasAssez;
+			etatCourant =  Etat.PAS_ASSEZ;
 			return;
 		}
 		montantEnCours -= toucheBoisson.getPrix();
 		afficherBoisson(toucheBoisson);
 		afficherMontant();
 		if (montantEnCours == 0)
-			etatCourant = idle;
+			etatCourant = Etat.IDLE;
 		else
-			etatCourant = collecte;
+			etatCourant = Etat.COLLECTE;
 	}
 	
 	public void rendreMonnaie() {
-		if (etatCourant != idle) {
+		if (etatCourant != Etat.IDLE) {
 			afficherRetour();
 			montantEnCours = 0;
 			boisson = null;
 		}
-		etatCourant = idle;
+		etatCourant = Etat.IDLE;
+	}
+
+	public void setState(Etat etat) {
+		this.etatCourant = etat;
 	}
 }
