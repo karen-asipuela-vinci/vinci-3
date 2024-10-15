@@ -11,7 +11,6 @@ import lombok.*;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor  // Constructeur sans arguments requis par JPA
-@Entity(name = "products")  // Spécifie le nom de la table en base de données
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
