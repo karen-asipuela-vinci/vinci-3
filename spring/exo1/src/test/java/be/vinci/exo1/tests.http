@@ -5,7 +5,7 @@ Content-Type: application/json
 {
   "name": "nameTest",
   "category": "categoryTest",
-  "price": 1000
+  "price": 10
 }
 
 ### Read all
@@ -28,7 +28,7 @@ Content-Type: application/json
 GET localhost:8080/produits
 
 ### Delete all
-POST localhost:8080/delete
+POST localhost:8080/produits/delete
 
 ### Read all
 GET localhost:8080/produits

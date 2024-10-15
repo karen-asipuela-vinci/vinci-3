@@ -1,73 +1,59 @@
 package be.vinci.exo1;
 
-import java.util.ArrayList;
-import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.List;
+
 @RestController
-public class ProduitsController{
-  private static final List<Produit> produits = new ArrayList<Produit>();
+@RequestMapping("/produits")
+public class ProduitsController {
 
-  static {
-    Produit newProduit1 = new Produit(1, "name1", "category1", 12.50 );
-    Produit newProduit2 = new Produit(2, "name2", "category2", 12.50 );
-    Produit newProduit3 = new Produit(3, "name3", "category3", 12.50 );
-    produits.add(newProduit1);
-    produits.add(newProduit2);
-    produits.add(newProduit3);
-  }
+    @Autowired
+    private ProduitService produitService;
 
-  // endpoints
-  //createOne
-  @PostMapping("/produits/create")
-  public Produit create(@RequestBody Produit produit) {
-    produit.setId(produits.size()+1);
-    produits.add(produit);
-    return produit;
-  }
-
-  //getAll
-  @GetMapping("/produits")
-  public Iterable<Produit> getProduits(){
-    return produits;
-  }
-
-  //getOne
-  @GetMapping("/produits/{id}")
-  public Produit getProduit(@PathVariable int id){
-    return produits.get(id - 1);
-  }
-
-  //updateOne
-  @PostMapping("/produits/update/{id}")
-  public Produit update(@PathVariable int id, @RequestBody Produit produit) {
-    Produit produitFound = produits.get(id-1);
-    if(produitFound == null){
-      throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+    // Create a new product
+    @PostMapping("/create")
+    public Produit create(@RequestBody Produit produit) {
+        if (!produitService.createOne(produit)) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Produit invalide");
+        }
+        return produit;
     }
 
-    produitFound.setName(produit.getName());
-    produitFound.setCategory(produit.getCategory());
-    produitFound.setPrice(produit.getPrice());
+    // Get all products
+    @GetMapping
+    public Iterable<Produit> getProduits() {
+        return produitService.getProduits();
+    }
 
-    return produitFound;
-  }
+    // Get a specific product by ID
+    @GetMapping("/{id}")
+    public Produit getProduit(@PathVariable int id) {
+        return produitService.getProduitById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Produit non trouvé"));
+    }
 
-  // deleteAll
-  @PostMapping("/delete")
-  public void delete() {
-    produits.clear();
-  }
+    // Update a specific product
+    @PostMapping("/update/{id}")
+    public Produit update(@PathVariable int id, @RequestBody Produit produit) {
+        return produitService.updateProduit(id, produit)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Produit non trouvé"));
+    }
 
-  //deleteOne
-  @PostMapping("/delete/{id}")
-  public void delete(@PathVariable int id) {
-    produits.remove(id - 1);
-  }
+    // Delete all products
+    @PostMapping("/delete")
+    public void deleteAll() {
+        produitService.deleteAllProduits();
+    }
+
+    // Delete a specific product by ID
+    @PostMapping("/delete/{id}")
+    public void delete(@PathVariable int id) {
+        if (!produitService.deleteProduitById(id)) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Produit non trouvé");
+        }
+    }
 }
