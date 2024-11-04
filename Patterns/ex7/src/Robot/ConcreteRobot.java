@@ -1,3 +1,5 @@
+package Robot;
+
 public class ConcreteRobot implements Robot {
     private final String name;
     private int life;
@@ -43,7 +45,7 @@ public class ConcreteRobot implements Robot {
 
     // comme 2 seules variables sont obligatoires
     // on va utiliser un Builder Pattern
-    // ICI CLASSE INTERNE A ConcreteRobot
+    // ICI CLASSE INTERNE A Robot.ConcreteRobot
     public static class Builder {
         private final String name;
         private int life;

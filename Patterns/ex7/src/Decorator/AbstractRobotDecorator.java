@@ -1,3 +1,7 @@
+package Decorator;
+
+import Robot.Robot;
+
 public abstract class AbstractRobotDecorator implements RobotDecorator {
     protected final Robot robot;
 

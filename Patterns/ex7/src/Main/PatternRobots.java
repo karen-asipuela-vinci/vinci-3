@@ -1,3 +1,12 @@
+package Main;
+
+import Decorator.DoubleCanonRobot;
+import Decorator.DoubleShieldRobot;
+import Decorator.MitigationRobot;
+import Robot.ConcreteRobot;
+import Robot.Robot;
+import Factory.*;
+
 public class PatternRobots {
 	
 	public static void fight(Robot robot1, Robot robot2) {
@@ -41,12 +50,30 @@ public class PatternRobots {
 		// et qui a reçu une amélioration de bouclier multipliant ce dernier par 2
 		// et une amélioration de mitigation des dégats qui réduit les points de vue perdus par 2.
 		Robot robot2= new ConcreteRobot.Builder("Robot2").shield(3).freq(9).canon(9).build();
-		robot2 = new DoubleShieldRobot(robot2);
+		robot2 = (Robot) new DoubleShieldRobot(robot2);
 		robot2 = new MitigationRobot(robot2);
 		//checks
 		System.out.println(robot2.getShield());
 		System.out.println(robot2.diffLife(0));
 
 		fight(robot1, robot2);
+
+		System.out.printf("-------------------------\n");
+
+		// utilisation des factory method
+		RobotFactory picVertFactory = new PicVertFactory();
+		RobotFactory grosseBertaFactory = new GrosseBertaFactory();
+		RobotFactory tankFactory = new TankFactory();
+
+		Robot picVert = picVertFactory.createRobot();
+		Robot grosseBerta = grosseBertaFactory.createRobot();
+		Robot tank = tankFactory.createRobot();
+
+		fight(picVert, grosseBerta);
+		System.out.println("-------------------------------------------\n");
+		fight(picVert, tank);
+		System.out.println("-------------------------------------------\n");
+		fight(grosseBerta, tank);
+
 	}
 }

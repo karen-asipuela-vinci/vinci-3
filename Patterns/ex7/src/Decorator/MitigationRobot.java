@@ -1,7 +1,12 @@
+package Decorator;
+
+import Robot.Robot;
+
 public class MitigationRobot extends AbstractRobotDecorator {
     public MitigationRobot(Robot robot) {
         super(robot);
     }
+
 
     @Override
     public int diffLife(int i) {
@@ -12,6 +17,6 @@ public class MitigationRobot extends AbstractRobotDecorator {
     @Override
     public void update() {
         super.update();
-        System.out.println("MitigationRobot update");
+        System.out.println("Decorator.MitigationRobot update");
     }
 }
