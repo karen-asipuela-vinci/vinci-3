@@ -1,8 +1,8 @@
 public abstract class AbstractRobotDecorator implements RobotDecorator {
-    private final RobotDecorator robot;
+    protected final Robot robot;
 
     public AbstractRobotDecorator(Robot robot) {
-        this.robot = (RobotDecorator) robot;
+        this.robot = robot;
     }
 
     @Override
@@ -32,6 +32,9 @@ public abstract class AbstractRobotDecorator implements RobotDecorator {
 
     @Override
     public void update() {
-        robot.update();
+        // Appelle la méthode update du robot décoré si c'est aussi un décorateur
+        if (robot instanceof RobotDecorator) {
+            ((RobotDecorator) robot).update();
+        }
     }
 }

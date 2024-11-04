@@ -4,8 +4,9 @@ public class MitigationRobot extends AbstractRobotDecorator {
     }
 
     @Override
-    public int getShield() {
-        return super.getShield()*2;
+    public int diffLife(int i) {
+        i = i/2;
+        return super.diffLife(i);
     }
 
     @Override

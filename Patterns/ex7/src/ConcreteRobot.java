@@ -1,4 +1,4 @@
-public class ConcreteRobot implements RobotDecorator {
+public class ConcreteRobot implements Robot {
     private final String name;
     private int life;
     private int shield;
@@ -38,11 +38,6 @@ public class ConcreteRobot implements RobotDecorator {
     public int diffLife(int i) {
         life += i;
         return life;
-    }
-
-    @Override
-    public void update() {
-        System.out.println("ConcreteRobot update");
     }
 
 
