@@ -1,0 +1,6 @@
+@exoRecap_HostAddress = http://localhost:5280
+
+GET {{exoRecap_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
