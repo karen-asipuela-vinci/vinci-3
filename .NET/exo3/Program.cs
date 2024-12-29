@@ -339,46 +339,62 @@ using (NorthwindContext context = new())
 // Vous demanderez les «id » des employés au clavier.
 // Essayez de supprimer DAVOLIO (employeeId ==1) et de réassigner ses commandes à FULLER (employeeId ==2) 
 
-WriteLine("Entrez l'ID de l'employé à supprimer : ");
-string? delete = ReadLine();
-int idDelete = int.Parse(delete);
+Console.WriteLine("Entrez l'ID de l'employé à supprimer : ");
+if (!int.TryParse(Console.ReadLine(), out int idDelete))
+{
+    Console.WriteLine("ID invalide.");
+    return;
+}
 
-WriteLine("Entrez l'ID de l'employé à réassigner : ");
-string? reassigned = ReadLine();
-int idReassigned = int.Parse(reassigned);
+Console.WriteLine("Entrez l'ID de l'employé à réassigner : ");
+if (!int.TryParse(Console.ReadLine(), out int idReassigned))
+{
+    Console.WriteLine("ID invalide.");
+    return;
+}
 
 using (NorthwindContext context = new())
 {
-    // on cherche l'employé 1 !!! on veut supp ses territories et ses employés :
-    Employee toDelete = (from e in context.Employees.Include("Territories").Include("InverseReportsToNavigation")
-                    where e.EmployeeId.Equals(idDelete)
-                    select e).Single<Employee>();
+    // Charger l'employé à supprimer avec ses relations
+    var toDelete = context.Employees
+        .Include(e => e.Territories)
+        .Include(e => e.InverseReportsToNavigation)
+        .SingleOrDefault(e => e.EmployeeId == idDelete);
 
-    // on cherche ses orders à transférer :
-    IQueryable<Order> ordersToTransfer = from o in context.Orders
-                                         where o.EmployeeId.Equals(idDelete)
-                                         select o;
-
-    // on cherche l'employé 2 :
-    Employee toReassigned = context.Employees.Find(idReassigned);
-
-    // si tout ok, on assigne les orders 1 à 1
-    // et on les supprime
-    if (toDelete != null && toReassigned != null)
+    if (toDelete == null)
     {
-        foreach (Order o in ordersToTransfer)
-        {
-            toReassigned.Orders.Add(o);
-            toDelete.Orders.Remove(o);
-        }
-
-        // puis on supprime tout du 1
-        //# faut d'abord vider les tables
-        toDelete.Territories.Clear();
-        toDelete.InverseReportsToNavigation.Clear();
-
-        context.Employees.Remove(toDelete);
-        int affected = context.SaveChanges();
-        WriteLine("Nombre de lignes affectées : " + affected);
+        Console.WriteLine($"Aucun employé trouvé avec l'ID {idDelete}.");
+        return;
     }
+
+    // Charger l'employé à réassigner
+    var toReassigned = context.Employees.Find(idReassigned);
+
+    if (toReassigned == null)
+    {
+        Console.WriteLine($"Aucun employé trouvé avec l'ID {idReassigned}.");
+        return;
+    }
+
+    // Charger les commandes à transférer
+    var ordersToTransfer = context.Orders
+        .Where(o => o.EmployeeId == idDelete)
+        .ToList();
+
+    // Transférer les commandes
+    foreach (var order in ordersToTransfer)
+    {
+        order.EmployeeId = idReassigned; // Changer l'ID de l'employé
+    }
+
+    // Vider les relations avant suppression
+    toDelete.Territories.Clear();
+    toDelete.InverseReportsToNavigation.Clear();
+
+    // Supprimer l'employé
+    context.Employees.Remove(toDelete);
+
+    // Sauvegarder les modifications
+    int affected = context.SaveChanges();
+    Console.WriteLine($"Nombre de lignes affectées : {affected}");
 }
