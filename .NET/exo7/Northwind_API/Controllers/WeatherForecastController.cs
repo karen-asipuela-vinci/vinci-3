@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace exoRecap.Controllers
+namespace Northwind_API.Controllers
 {
     [ApiController]
     [Route("[controller]")]

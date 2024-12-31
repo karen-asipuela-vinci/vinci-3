@@ -1,4 +1,15 @@
+using Microsoft.EntityFrameworkCore;
+using Northwind_API.Entities;
+using Northwind_API.UnitOfWork;
+
 var builder = WebApplication.CreateBuilder(args);
+
+// Ajouter DbContext et UnitOfWork
+builder.Services.AddDbContext<NorthwindContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("NorthwindDatabase")));
+
+// Ajouter UnitOfWork
+builder.Services.AddScoped<IUnitOfWork, UnitOfWorkMem>();
 
 // Add services to the container.
 

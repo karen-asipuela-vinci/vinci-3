@@ -1,4 +1,4 @@
-namespace exoRecap
+namespace Northwind_API
 {
     public class WeatherForecast
     {
