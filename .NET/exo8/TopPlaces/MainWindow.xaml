@@ -1,0 +1,51 @@
+﻿<Window x:Class="TopPlaces.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TopPlaces"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="800" Width="1058">
+    <Window.Resources>
+        <Style x:Key="TitreStyle">
+            <Setter Property="Control.FontSize" Value="18"/>
+            <Setter Property="Control.BorderBrush" Value="Black"/>
+            <Setter Property="Control.BorderThickness" Value="2"/>
+        </Style>
+        <!-- Style for the labels -->
+        <Style x:Key="LabelStyle">
+            <Setter Property="Control.FontSize" Value="14"/>
+            <!-- police = Courrier New -->
+            <Setter Property="Control.FontFamily" Value="Courier New"/>
+            <Setter Property="Control.BorderBrush" Value="Black"/>
+            <Setter Property="Control.BorderThickness" Value="2"/>
+        </Style>
+        <!-- Template pour affichage de listBox -->
+        <DataTemplate x:Key="ItemTemplate">
+            <StackPanel  Orientation="Horizontal" Margin="0 5 0 5">
+                <Image Width="50" Height="50" Stretch="Fill" Source="{Binding Image}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                <Label Content="{Binding Description}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+            </StackPanel>
+        </DataTemplate>
+    </Window.Resources>
+    <Grid>
+        <!-- Add a list-->
+        <ListBox x:Name="listBoxPhotos" ItemsSource="{Binding}" ItemTemplate="{StaticResource ItemTemplate}"/>
+        <!-- add first image : amsterdam -->
+        <Image x:Name="image1" HorizontalAlignment="Left" Height="400" Margin="215,10,0,0" VerticalAlignment="Top" Width="550" Stretch="Fill"/>
+            <!-- add 3 labels : Description, URI fichier, nb votes -->
+        <Grid>
+            <!-- add 3 labels : Description, URI fichier, nb votes -->
+            <Label x:Name="labelDescription" Content="Description" Style="{StaticResource LabelStyle}" HorizontalAlignment="Left" Margin="215,420,0,0" VerticalAlignment="Top"/>
+            <Label x:Name="labelFile" Content="File" Style="{StaticResource LabelStyle}" HorizontalAlignment="Left" Margin="215,450,0,0" VerticalAlignment="Top"/>
+            <Label x:Name="labelVotes" Content="Votes" Style="{StaticResource LabelStyle}" HorizontalAlignment="Left" Margin="215,480,0,0" VerticalAlignment="Top"/>
+            
+            <!-- add 3 value labels : description_value, uri_value, votes_value -->
+            <Label x:Name="description_value" Content="" Style="{StaticResource LabelStyle}" HorizontalAlignment="Left" Margin="400,420,0,0" VerticalAlignment="Top"/>
+            <Label x:Name="uri_value" Content="" Style="{StaticResource LabelStyle}" HorizontalAlignment="Left" Margin="400,450,0,0" VerticalAlignment="Top"/>
+            <Label x:Name="votes_value" Content="" Style="{StaticResource LabelStyle}" HorizontalAlignment="Left" Margin="400,480,0,0" VerticalAlignment="Top"/>
+        </Grid>
+        <!-- titre "Top places", avec propriété content pour le texte-->
+        <Label x:Name="labelTitle" Content="Top places" Style="{StaticResource TitreStyle}"/>
+    </Grid>
+</Window>
