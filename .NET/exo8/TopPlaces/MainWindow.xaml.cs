@@ -23,5 +23,22 @@ namespace TopPlaces
             PlacesData placesData = new PlacesData();
             this.listBoxPhotos.DataContext = placesData.PlacesList;
         }
+
+        private void listBoxPhotos_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Place place = (Place)this.listBoxPhotos.SelectedItem;
+            BitmapSource photo = BitmapFrame.Create(new Uri(place.PathImageFile));
+            image1.Source = photo;
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            Place place = (Place)this.listBoxPhotos.SelectedItem;
+            if (place != null)
+            {
+                place.NbVotes++;
+                MessageBox.Show($"Votes for {place.Description}: {place.NbVotes}");
+            }
+        }
     }
 }

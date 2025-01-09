@@ -30,22 +30,31 @@
     </Window.Resources>
     <Grid>
         <!-- Add a list-->
-        <ListBox x:Name="listBoxPhotos" ItemsSource="{Binding}" ItemTemplate="{StaticResource ItemTemplate}"/>
+        <ListBox x:Name="listBoxPhotos" ItemsSource="{Binding}" ItemTemplate="{StaticResource ItemTemplate}" SelectionChanged="listBoxPhotos_SelectionChanged" Margin="0,0,843,0"/>
         <!-- add first image : amsterdam -->
-        <Image x:Name="image1" HorizontalAlignment="Left" Height="400" Margin="215,10,0,0" VerticalAlignment="Top" Width="550" Stretch="Fill"/>
-            <!-- add 3 labels : Description, URI fichier, nb votes -->
-        <Grid>
+        <Image x:Name="image1" HorizontalAlignment="Left" Height="439" Margin="215,10,0,0" VerticalAlignment="Top" Width="817" Stretch="Fill"/>
+        <!-- add 3 labels : Description, URI fichier, nb votes -->
+        <Grid Margin="220,99,0,0">
             <!-- add 3 labels : Description, URI fichier, nb votes -->
             <Label x:Name="labelDescription" Content="Description" Style="{StaticResource LabelStyle}" HorizontalAlignment="Left" Margin="215,420,0,0" VerticalAlignment="Top"/>
             <Label x:Name="labelFile" Content="File" Style="{StaticResource LabelStyle}" HorizontalAlignment="Left" Margin="215,450,0,0" VerticalAlignment="Top"/>
             <Label x:Name="labelVotes" Content="Votes" Style="{StaticResource LabelStyle}" HorizontalAlignment="Left" Margin="215,480,0,0" VerticalAlignment="Top"/>
-            
+
             <!-- add 3 value labels : description_value, uri_value, votes_value -->
-            <Label x:Name="description_value" Content="" Style="{StaticResource LabelStyle}" HorizontalAlignment="Left" Margin="400,420,0,0" VerticalAlignment="Top"/>
-            <Label x:Name="uri_value" Content="" Style="{StaticResource LabelStyle}" HorizontalAlignment="Left" Margin="400,450,0,0" VerticalAlignment="Top"/>
-            <Label x:Name="votes_value" Content="" Style="{StaticResource LabelStyle}" HorizontalAlignment="Left" Margin="400,480,0,0" VerticalAlignment="Top"/>
+            <Label x:Name="description_value" Content="{Binding ElementName=listBoxPhotos, Path=SelectedItem.Description}" Style="{StaticResource LabelStyle}" HorizontalAlignment="Left" Margin="400,420,0,0" VerticalAlignment="Top"/>
+            <Label x:Name="uri_value" Content="{Binding ElementName=listBoxPhotos, Path=SelectedItem.Uri}" Style="{StaticResource LabelStyle}" HorizontalAlignment="Left" Margin="400,450,0,0" VerticalAlignment="Top"/>
+            <Label x:Name="votes_value" Content="{Binding ElementName=listBoxPhotos, Path=SelectedItem.NbVotes}" Style="{StaticResource LabelStyle}" HorizontalAlignment="Left" Margin="400,480,0,0" VerticalAlignment="Top"/>
         </Grid>
         <!-- titre "Top places", avec propriété content pour le texte-->
-        <Label x:Name="labelTitle" Content="Top places" Style="{StaticResource TitreStyle}"/>
+        <Label x:Name="labelTitle" Content="Top places" Style="{StaticResource TitreStyle}" Margin="0,0,848,746"/>
+        <Button Height="30" Margin="397,627,419,127" Click="Button_Click">
+            <StackPanel Orientation="Horizontal" Width="113">
+                <Image Source="photos\jaime.png" Height="25" Width="45" Margin="0,0,0,0" 
+	HorizontalAlignment="Left"/>
+                <TextBlock Text="Je vote pour" VerticalAlignment="Center" Width="74"/>
+            </StackPanel>
+        </Button>
+
+
     </Grid>
 </Window>
