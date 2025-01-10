@@ -1,0 +1,16 @@
+Pour bd : b.	Ajouter les packages
+	Microsoft.EntityFrameworkCore
+	Microsoft.EntityFrameworkCore.Design
+	Microsoft.EntityFrameworkCore.Tools
+	Microsoft.EntityFrameworkCore.SqlServer
+
+Commande à copier dans Outils -> Gestionnaire de Packets Nuget -> console :
+
+Scaffold-DbContext -OutputDir Models 'Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=Northwind' Microsoft.EntityFrameworkCore.SqlServer
+
+
+!!A CHANGER QUAND PLUSIEURS ACCES A DB DANS CONTEXT :
+
+
+optionsBuilder.UseSqlServer("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=Northwind;MultipleActiveResultSets=true");
+

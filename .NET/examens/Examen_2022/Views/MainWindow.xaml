@@ -38,7 +38,7 @@
                  ItemTemplate="{StaticResource listboxTemplate}"
                  HorizontalAlignment="Left"
                  VerticalAlignment="Top"
-                 Width="364" Height="153"
+                 Width="364" Height="128"
                  Margin="36,20,0,0"/>
 
         <!-- ListBox pour afficher les totaux des ventes -->
@@ -51,7 +51,7 @@
              Margin="0,31,35,0"/>
 
         <!-- Formulaire -->
-        <StackPanel Orientation="Vertical" Margin="36,186,354,0" VerticalAlignment="Top">
+        <StackPanel Orientation="Vertical" Margin="36,166,354,0" VerticalAlignment="Top">
             <TextBlock Text="ID du Produit :" Margin="0,0,0,5"/>
             <TextBox Text="{Binding SelectedProduct.ProductId}" IsReadOnly="True" Width="200"/>
 
