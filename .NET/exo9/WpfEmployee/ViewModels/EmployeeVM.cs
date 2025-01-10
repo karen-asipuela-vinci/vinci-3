@@ -22,7 +22,9 @@ namespace WpfEmployee.ViewModels
             }
         }
 
-        // Liste des titres de courtoisie
+        // Liste des titres de courtoisie : si liste fixe
+        // Si besoin de charger les titres depuis la db : utiliser une ObservableCollection avec loadTitles()
+        // voir réponse prof
         public ObservableCollection<string> ListTitle { get; set; } = new ObservableCollection<string>
     {
         "Mr.",
